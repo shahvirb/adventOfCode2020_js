@@ -1,4 +1,4 @@
-module.exports = {
+{
     "env": {
         "browser": true,
         "commonjs": true,
@@ -8,8 +8,8 @@ module.exports = {
         "standard"
     ],
     "parserOptions": {
-        "ecmaVersion": 13
+        "ecmaVersion": 12
     },
     "rules": {
     }
-};
+}

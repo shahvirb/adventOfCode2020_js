@@ -9,7 +9,7 @@ function readFile (filepath) {
 }
 
 function readLines (filepath, perLineFunc = null) {
-  let lines = readFile(filepath).split('\n')
+  let lines = readFile(filepath).split('\n').map(s => s.trim())
   if (perLineFunc) lines = lines.map(perLineFunc)
   return lines
 }

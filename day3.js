@@ -59,15 +59,31 @@ const readfile = require('./readfile')
 const lines = readfile.readLines('day3.txt')
 const treeMap = new TreeMap(lines)
 
-const SLOPE_RIGHT = 3
-const SLOPE_DOWN = 1
-let trees = 0
-for (let n = 1; n < treeMap.ySize / SLOPE_DOWN; n++) {
-  const x = n * SLOPE_RIGHT
-  const y = n * SLOPE_DOWN
-  const current = treeMap.at(x, y)
-  if (current === '#') trees++
-  console.log(n, current, current === '#')
+function countTrees (treeMap, slopeRight, slopeDown) {
+  let trees = 0
+  for (let n = 1; n < treeMap.ySize / slopeDown; n++) {
+    const x = n * slopeRight
+    const y = n * slopeDown
+    const current = treeMap.at(x, y)
+    if (current === '#') { trees++ }
+    // console.log(n, current, current === '#')
+  }
+  return trees
 }
-console.log(trees)
-// treeMap.consoleLog()
+
+console.log('Part 1 Answer:', countTrees(treeMap, 3, 1))
+
+const P2_SLOPES = [
+  [1, 1],
+  [3, 1],
+  [5, 1],
+  [7, 1],
+  [1, 2]
+]
+let product = 1
+for (const slope of P2_SLOPES) {
+  const trees = countTrees(treeMap, ...slope)
+  product *= trees
+  console.log(slope, trees)
+}
+console.log('Part 2 Answer:', product)

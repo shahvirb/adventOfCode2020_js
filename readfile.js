@@ -8,10 +8,8 @@ function readFile (filepath) {
   }
 }
 
-function readLines (filepath, perLineFunc = null) {
-  let lines = readFile(filepath).split('\n').map(s => s.trim())
-  if (perLineFunc) lines = lines.map(perLineFunc)
-  return lines
+function readLines (filepath) {
+  return readFile(filepath).split('\n').map(s => s.trim())
 }
 
 module.exports = {

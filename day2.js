@@ -21,7 +21,7 @@ class PasswordLine {
 }
 
 const readfile = require('./readfile')
-const lines = readfile.readLines('day2.txt', line => new PasswordLine(line))
+const lines = readfile.readLines('day2.txt').map(line => new PasswordLine(line))
 
 let c1 = 0
 let c2 = 0

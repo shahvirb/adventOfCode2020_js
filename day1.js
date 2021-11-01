@@ -1,5 +1,5 @@
 const readfile = require('./readfile')
-const numbers = readfile.readLines('day1.txt', str => parseInt(str))
+const numbers = readfile.readLines('day1.txt').map(str => parseInt(str))
 
 function findSum (numbers, sum) {
   for (let i = 0; i < numbers.length; i++) {

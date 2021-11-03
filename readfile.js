@@ -13,6 +13,6 @@ function readLines (filepath) {
 }
 
 module.exports = {
-  readFile: readFile,
-  readLines: readLines
+  readFile,
+  readLines
 }

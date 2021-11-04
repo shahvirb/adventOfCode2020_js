@@ -14,7 +14,7 @@ class UnitsRangePolicy {
     this.unitPolicyMap = unitPolicyMap
   }
 
-  validate(str, suffixLength = 2) {
+  validate (str, suffixLength = 2) {
     const units = str.slice(-suffixLength)
     const value = str.slice(0, str.length - suffixLength)
     return this.unitPolicyMap[units].validate(value)
@@ -28,7 +28,8 @@ module.exports = {
 
 if (require.main === module) {
   const readfile = require('./readfile')
-  const passportStrings = readfile.readFile('day4.txt').split('\n\n').map(x => x.split('\n').join(' ').trim())
+  const { EOL } = require('os')
+  const passportStrings = readfile.readFile('day4.txt').split(EOL + EOL).map(x => x.split(EOL).join(' ').trim())
 
   function genPassportMap (str) {
     return new Map(str.split(' ').map(x => x.split(':')))

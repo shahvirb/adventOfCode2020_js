@@ -9,8 +9,21 @@ class NumericalRangePolicy {
   }
 }
 
+class UnitsRangePolicy {
+  constructor (unitPolicyMap) {
+    this.unitPolicyMap = unitPolicyMap
+  }
+
+  validate(str, suffixLength = 2) {
+    const units = str.slice(-suffixLength)
+    const value = str.slice(0, str.length - suffixLength)
+    return this.unitPolicyMap[units].validate(value)
+  }
+}
+
 module.exports = {
-  NumericalRangePolicy
+  NumericalRangePolicy,
+  UnitsRangePolicy
 }
 
 if (require.main === module) {

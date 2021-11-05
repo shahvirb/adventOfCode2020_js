@@ -23,20 +23,36 @@ class UnitsRangePolicy {
 
 class RegexPolicy {
   constructor (regexStr) {
-    this.regex = new RegExp(regexStr)
+    this.regex = new RegExp('^' + regexStr + '$')
   }
 
   validate (str) {
     return this.regex.test(str)
   }
 }
+const heightPolicyMap = new Map([
+  ['cm', new NumericalRangePolicy(150, 193)],
+  ['in', new NumericalRangePolicy(59, 76)]
+])
 const HAIRCOLOR_REGEX = '#[0-9a-f]{6}'
+const EYECOLORS_REGEX = '(amb|blu|brn|gry|grn|hzl|oth)'
+const PASSPORT_ID_REGEX = '[0-9]{9}'
+const POLICIES = [
+  ['byr', new NumericalRangePolicy(1920, 2002)],
+  ['iyr', new NumericalRangePolicy(2010, 2020)],
+  ['eyr', new NumericalRangePolicy(2020, 2030)],
+  ['hgt', new UnitsRangePolicy(heightPolicyMap)],
+  ['hcl', new RegexPolicy(HAIRCOLOR_REGEX)],
+  ['ecl', new RegexPolicy(EYECOLORS_REGEX)],
+  ['pid', new RegexPolicy(PASSPORT_ID_REGEX)]
+]
 
 module.exports = {
   NumericalRangePolicy,
   UnitsRangePolicy,
   RegexPolicy,
-  HAIRCOLOR_REGEX
+  HAIRCOLOR_REGEX,
+  POLICIES
 }
 
 if (require.main === module) {
@@ -71,35 +87,16 @@ if (require.main === module) {
   console.log('Part 1 answer:', countPassports(passports, validateRequiredFields))
 
   { // Part 2
-    const heightPolicyMap = new Map([
-      ['cm', new NumericalRangePolicy(150, 193)],
-      ['in', new NumericalRangePolicy(59, 76)]
-    ])
-    const EYECOLORS_REGEX = 'amb|blu|brn|gry|grn|hzl|oth'
-    const PASSPORT_ID_REGEX = '[0-9]{9}'
-    const policies = [
-      ['byr', new NumericalRangePolicy(1920, 2002)],
-      ['iyr', new NumericalRangePolicy(2010, 2020)],
-      ['eyr', new NumericalRangePolicy(2020, 2030)],
-      ['hgt', new UnitsRangePolicy(heightPolicyMap)],
-      ['hcl', new RegexPolicy(HAIRCOLOR_REGEX)],
-      ['ecl', new RegexPolicy(EYECOLORS_REGEX)],
-      ['pid', new RegexPolicy(PASSPORT_ID_REGEX)]
-    ]
-
     function validatePassport (passport, policies) {
-      console.log('Validating passport:', passport)
       for (const policy of policies) {
         const fieldVal = passport.get(policy[0])
-        console.log('Checking', policy[0], fieldVal, policy[1].validate(fieldVal))
         if (!fieldVal || !policy[1].validate(fieldVal)) return false
       }
-      console.log('Passport looks good!')
       return true
     }
 
     const count = countPassports(passports, passport => {
-      return validatePassport(passport, policies)
+      return validatePassport(passport, POLICIES)
     })
     console.log('Part 2 answer:', count)
   }
